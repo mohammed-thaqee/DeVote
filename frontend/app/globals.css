@@ -1,0 +1,103 @@
+/* ─── Google Fonts (must be first import) ──────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap");
+@import "tailwindcss";
+
+:root {
+  --bg:          #0a0a0f;
+  --surface:     #111118;
+  --surface-2:   #18181f;
+  --border:      #2a2a38;
+  --accent:      #6ee7b7;
+  --accent-dim:  #34d39966;
+  --accent-2:    #818cf8;
+  --accent-2-dim:#818cf833;
+  --text:        #e8e8f0;
+  --text-muted:  #6b6b88;
+  --danger:      #f87171;
+  --warning:     #fbbf24;
+  --success:     #34d399;
+  --font-display: "Syne", sans-serif;
+  --font-mono:    "Space Mono", monospace;
+  --radius:       12px;
+  --radius-lg:    20px;
+  --glow-accent:  0 0 40px #6ee7b733, 0 0 80px #6ee7b711;
+  --glow-indigo:  0 0 40px #818cf833;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+}
+
+.grid-bg {
+  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; animation: pulse-orb 8s ease-in-out infinite; }
+.orb-green { background: radial-gradient(circle, #6ee7b722 0%, transparent 70%); width: 600px; height: 600px; }
+.orb-indigo { background: radial-gradient(circle, #818cf822 0%, transparent 70%); width: 500px; height: 500px; }
+@keyframes pulse-orb { 0%, 100% { transform: scale(1) translateY(0); opacity: 0.7; } 50% { transform: scale(1.1) translateY(-20px); opacity: 1; } }
+
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); transition: border-color 0.2s, box-shadow 0.2s; }
+.card:hover { border-color: #3a3a50; }
+.card-glow:hover { border-color: var(--accent); box-shadow: var(--glow-accent); }
+
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge-green  { background: #6ee7b722; color: var(--accent); border: 1px solid #6ee7b744; }
+.badge-indigo { background: #818cf822; color: var(--accent-2); border: 1px solid #818cf844; }
+.badge-red    { background: #f8717122; color: var(--danger); border: 1px solid #f8717144; }
+.badge-yellow { background: #fbbf2422; color: var(--warning); border: 1px solid #fbbf2444; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: var(--radius); font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.05em; cursor: pointer; transition: all 0.15s ease; border: none; outline: none; white-space: nowrap; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-primary { background: var(--accent); color: #0a0a0f; box-shadow: 0 0 20px var(--accent-dim); }
+.btn-primary:hover:not(:disabled) { background: #a7f3d0; box-shadow: 0 0 35px var(--accent-dim); transform: translateY(-1px); }
+.btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.btn-danger { background: transparent; color: var(--danger); border: 1px solid #f8717144; }
+.btn-danger:hover:not(:disabled) { background: #f8717122; }
+.btn-indigo { background: var(--accent-2); color: #fff; }
+.btn-indigo:hover:not(:disabled) { background: #a5b4fc; box-shadow: var(--glow-indigo); transform: translateY(-1px); }
+
+.progress-track { background: var(--surface-2); border-radius: 100px; overflow: hidden; height: 8px; }
+.progress-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent-2), var(--accent)); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--accent-dim); }
+
+.candidate-card { cursor: pointer; position: relative; overflow: hidden; transition: all 0.2s ease; }
+.candidate-card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; opacity: 0; transition: opacity 0.2s; background: linear-gradient(135deg, #34d39922 0%, transparent 60%); }
+.candidate-card.selected { border-color: var(--accent) !important; box-shadow: var(--glow-accent); }
+.candidate-card.selected::before { opacity: 1; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner { width: 16px; height: 16px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+
+.toast { border-radius: var(--radius); padding: 14px 18px; font-size: 13px; border: 1px solid; display: flex; align-items: flex-start; gap: 10px; }
+.toast-success { background: #6ee7b711; border-color: #6ee7b744; color: var(--success); }
+.toast-error   { background: #f8717111; border-color: #f8717144; color: var(--danger); }
+.toast-info    { background: #818cf811; border-color: #818cf844; color: var(--accent-2); }
+.toast-warning { background: #fbbf2411; border-color: #fbbf2444; color: var(--warning); }
+
+@keyframes slide-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.animate-slide-up { animation: slide-up 0.4s ease forwards; }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.animate-fade-in { animation: fade-in 0.3s ease forwards; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
